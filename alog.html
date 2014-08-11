@@ -13,7 +13,7 @@
 				<th>
 					hour/dates
 				</th>
-				<th ng-repeat="d in dates">
+				<th ng-repeat="d in dates2">
 					{{ d }}
 				</th>
 			</tr>
@@ -21,7 +21,7 @@
 				<th>
 					{{ h }}
 				</th>
-				<td ng-repeat="d in dates">
+				<td ng-repeat="d in dates2">
 					{{ d }} , {{ h }}
 				</td>
 			</tr>
@@ -37,6 +37,11 @@
 		$scope.dateSearchText = "2014-07-30";
 		$scope.dates = ["2014-07-30","2014-07-31"];
 		$scope.hours= [1,2,3,4,5];
+		$scope.datehours = [];
+		$scope.dates2 = [];
+		angular.forEach($scope.dates,function(date){
+			$scope.dates2.push(date);
+		});
 	});
 	</script>
 </body>
