@@ -3,17 +3,21 @@
 
 
 	<div ng-controller="viewGridController">
+
+
 		<ol>
 			<li ng-repeat="a in activities">
 					{{ a.id }} - {{ a.date }} - {{ a.hour }} - {{ a.activity }}
 			</li>
 		</ol>
+
+
 		<table>
 			<tr >
 				<th>
 					hour/dates
 				</th>
-				<th ng-repeat="d in dates2">
+				<th ng-repeat="d in dates">
 					{{ d }}
 				</th>
 			</tr>
@@ -21,11 +25,13 @@
 				<th>
 					{{ h }}
 				</th>
-				<td ng-repeat="d in dates2">
+				<td ng-repeat="d in dates">
 					{{ d }} , {{ h }}
 				</td>
 			</tr>
 		</table>
+
+
 	</div>
 
 	<script src="js/angular.min.js"></script>
@@ -36,11 +42,28 @@
 		//$scope.custo = {"id":1};
 		$scope.dateSearchText = "2014-07-30";
 		$scope.dates = ["2014-07-30","2014-07-31"];
-		$scope.hours= [1,2,3,4,5];
-		$scope.datehours = [];
-		$scope.dates2 = [];
-		angular.forEach($scope.dates,function(date){
-			$scope.dates2.push(date);
+		$scope.hours= [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24];
+		$scope.activities_grid = [];
+
+		var i=0;
+		angular.forEach($scope.hours,function(hour){
+			
+			var activities_grid_inner = [];
+			angular.forEach($scope.dates,function(date){
+				var activities_in_dayhour = [];
+				//
+				// Date is sorted
+				//
+				if($scope.activities[i].date == date &&
+					$scope.activities[i].hour == hour){
+
+				}else{
+
+				}
+			});
+
+			$scope.activities_grid.push(activities_grid_inner);
+
 		});
 	});
 	</script>
