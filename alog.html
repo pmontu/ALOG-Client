@@ -3,25 +3,41 @@
 
 
 	<div ng-controller="viewGridController">
-		<input type=text ng-model="searchText">
-		{{searchText}}
-		<ol ng-repeat="cust in customers | filter:searchText">
-			<li>
-				{{ cust.id }} - {{ cust.name }}
+		<ol>
+			<li ng-repeat="a in activities">
+					{{ a.id }} - {{ a.date }} - {{ a.hour }} - {{ a.activity }}
 			</li>
 		</ol>
+		<table>
+			<tr >
+				<th>
+					hour/dates
+				</th>
+				<th ng-repeat="d in dates">
+					{{ d }}
+				</th>
+			</tr>
+			<tr ng-repeat="h in hours">
+				<th>
+					{{ h }}
+				</th>
+				<td ng-repeat="d in dates">
+					{{ d }} , {{ h }}
+				</td>
+			</tr>
+		</table>
 	</div>
 
 	<script src="js/angular.min.js"></script>
 	<script>
-	angular.module("alogApp",[])
-		.controller("viewGridController", function($scope) {
-			$scope.customers = [
-				{"id":1, "name":"montu"},
-				{"id":2, "name":"ajay"},
-			];
-			$scope.custo = {"id":1, "name":"montu"};
-		});
+	var app = angular.module("alogApp",[]);
+	app.controller("viewGridController", function($scope) {
+		$scope.activities = [{"date": "2014-07-30", "details": "", "id": 1, "hour": 13, "activity": "Food"}, {"date": "2014-07-30", "details": "", "id": 2, "hour": 14, "activity": "Workout"}, {"date": "2014-07-30", "details": "", "id": 4, "hour": 17, "activity": "Food"}, {"date": "2014-07-30", "details": "", "id": 5, "hour": 18, "activity": "Doctor"}, {"date": "2014-07-30", "details": "", "id": 6, "hour": 19, "activity": "Leisure"}, {"date": "2014-07-30", "details": "", "id": 7, "hour": 20, "activity": "Food"}, {"date": "2014-07-31", "details": "", "id": 79, "hour": 13, "activity": "Food"}, {"date": "2014-07-31", "details": "", "id": 82, "hour": 16, "activity": "Food"}, {"date": "2014-07-31", "details": "", "id": 83, "hour": 17, "activity": "Social"}, {"date": "2014-07-31", "details": "", "id": 84, "hour": 18, "activity": "Social"}, {"date": "2014-07-31", "details": "", "id": 85, "hour": 19, "activity": "Social"}, {"date": "2014-07-31", "details": "", "id": 86, "hour": 20, "activity": "Food"}, {"date": "2014-07-31", "details": "", "id": 87, "hour": 21, "activity": "Leisure"}, {"date": "2014-08-01", "details": "", "id": 8, "hour": 8, "activity": "Food"}, {"date": "2014-08-01", "details": "", "id": 70, "hour": 13, "activity": "Food"}, {"date": "2014-08-01", "details": "", "id": 71, "hour": 14, "activity": "Leisure"}, {"date": "2014-08-01", "details": "", "id": 72, "hour": 15, "activity": "Leisure"}, {"date": "2014-08-01", "details": "", "id": 73, "hour": 16, "activity": "Social"}, {"date": "2014-08-01", "details": "", "id": 74, "hour": 17, "activity": "Social"}, {"date": "2014-08-01", "details": "", "id": 75, "hour": 18, "activity": "Social"}, {"date": "2014-08-01", "details": "", "id": 76, "hour": 19, "activity": "Workout"}, {"date": "2014-08-01", "details": "", "id": 77, "hour": 20, "activity": "Food"}, {"date": "2014-08-01", "details": "", "id": 78, "hour": 21, "activity": "Leisure"}, {"date": "2014-08-02", "details": "", "id": 56, "hour": 8, "activity": "Workout"}, {"date": "2014-08-02", "details": "", "id": 57, "hour": 9, "activity": "Leisure"}, {"date": "2014-08-02", "details": "", "id": 58, "hour": 10, "activity": "Work"}, {"date": "2014-08-02", "details": "", "id": 59, "hour": 11, "activity": "Social"}, {"date": "2014-08-02", "details": "", "id": 60, "hour": 12, "activity": "Social"}, {"date": "2014-08-02", "details": "", "id": 61, "hour": 13, "activity": "Food"}, {"date": "2014-08-02", "details": "", "id": 62, "hour": 14, "activity": "Work"}, {"date": "2014-08-02", "details": "", "id": 63, "hour": 15, "activity": "Social"}, {"date": "2014-08-02", "details": "", "id": 64, "hour": 16, "activity": "Food"}, {"date": "2014-08-02", "details": "", "id": 65, "hour": 17, "activity": "Leisure"}, {"date": "2014-08-02", "details": "", "id": 66, "hour": 18, "activity": "Leisure"}, {"date": "2014-08-02", "details": "", "id": 67, "hour": 19, "activity": "Leisure"}, {"date": "2014-08-02", "details": "", "id": 68, "hour": 20, "activity": "Food"}, {"date": "2014-08-02", "details": "", "id": 69, "hour": 21, "activity": "Food"}, {"date": "2014-08-03", "details": "", "id": 40, "hour": 7, "activity": "Food"}, {"date": "2014-08-03", "details": "", "id": 41, "hour": 8, "activity": "Workout"}, {"date": "2014-08-03", "details": "", "id": 42, "hour": 9, "activity": "Work"}, {"date": "2014-08-03", "details": "", "id": 43, "hour": 10, "activity": "Work"}, {"date": "2014-08-03", "details": "", "id": 44, "hour": 11, "activity": "Work"}, {"date": "2014-08-03", "details": "", "id": 45, "hour": 12, "activity": "Workout"}, {"date": "2014-08-03", "details": "", "id": 46, "hour": 13, "activity": "Leisure"}, {"date": "2014-08-03", "details": "", "id": 47, "hour": 14, "activity": "Food"}, {"date": "2014-08-03", "details": "", "id": 48, "hour": 15, "activity": "Social"}, {"date": "2014-08-03", "details": "", "id": 49, "hour": 16, "activity": "Social"}, {"date": "2014-08-03", "details": "", "id": 50, "hour": 17, "activity": "Work"}, {"date": "2014-08-03", "details": "", "id": 51, "hour": 18, "activity": "Work"}, {"date": "2014-08-03", "details": "", "id": 52, "hour": 19, "activity": "Social"}, {"date": "2014-08-03", "details": "", "id": 53, "hour": 20, "activity": "Social"}, {"date": "2014-08-03", "details": "", "id": 54, "hour": 21, "activity": "Food"}, {"date": "2014-08-03", "details": "", "id": 55, "hour": 22, "activity": "Leisure"}];
+		//$scope.custo = {"id":1};
+		$scope.dateSearchText = "2014-07-30";
+		$scope.dates = ["2014-07-30","2014-07-31"];
+		$scope.hours= [1,2,3,4,5];
+	});
 	</script>
 </body>
 </html>

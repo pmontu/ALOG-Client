@@ -1,0 +1,40 @@
+<html>
+<body ng-app="alogApp">
+
+
+	<div ng-controller="viewGridController">
+		date:<input type=text ng-model="cust.date"/>
+		name:<input type=text ng-model="cust.name"/>
+		id:<input type=text ng-model="cust.id"/>
+		Equality:<input type="checkbox" ng-model="strict"><br>
+		datetest<input type=text ng-model="dateSearchText"/>
+		<ol>
+			<li ng-repeat="c in customers | filter:cust:strict">
+				{{ c.id }} - {{ c.name }} - {{ c.date }}
+			</li>
+		</ol>
+	</div>
+
+	<script src="js/angular.min.js"></script>
+	<script>
+	var app = angular.module("alogApp",[]);
+	app.controller("viewGridController", function($scope) {
+		$scope.customers = [
+			{"id": 1, "name": "manoj", "date": "2014-07-30"},
+			{"id": 2, "name": "ajay", "date": "2014-07-30"},
+			{"id": 3, "name": "puru", "date": "2014-07-31"},
+			{"id": 4, "name": "nn", "date": "2014-07-31"}
+		];
+		//$scope.cust = {"id":1, "name": "manoj", "date": "2014-07-30"};
+		$scope.cust = {};
+		$scope.dates = ["2014-07-30","2014-07-31"];
+		$scope.fnfilter = function(cust){
+			if(cust.date == "2014-07-30"){
+				return true;
+			}
+			return false;
+		};
+	});
+	</script>
+</body>
+</html>
