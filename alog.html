@@ -2,15 +2,27 @@
 <body ng-app="alogApp">
 
 
+	
+	<script src="js/angular.js"></script>
+	<script src="js/alog.js"></script>
+
 	<div ng-controller="viewGridController">
+
+
+		<input type="date"
+       ng-model="dateStart"
+       min="2014-07-30"
+       max="{{ dateToday | date:'yyyy-MM-dd' }}"
+       ng-change="change()"
+       >
 
 		<table>
 			<tr >
 				<th>
-					hour/dates
+					
 				</th>
 				<th ng-repeat="d in dates">
-					{{ d }}
+					{{ d | date:'yyyy-MM-dd' }}
 				</th>
 			</tr>
 			<tr ng-repeat="activities_grid_inner in activities_grid">
@@ -28,69 +40,5 @@
 
 	</div>
 
-	<script src="js/angular.min.js"></script>
-	<script>
-	console.log("body script");
-
-	var app = angular.module("alogApp",[]);
-	app.controller("viewGridController", function($scope) {
-		var activities = [{"date": "2014-07-30", "details": "", "id": 1, "hour": 13, "activity": "Food"}, {"date": "2014-07-30", "details": "", "id": 2, "hour": 14, "activity": "Workout"}, {"date": "2014-07-30", "details": "", "id": 4, "hour": 17, "activity": "Food"}, {"date": "2014-07-30", "details": "", "id": 5, "hour": 18, "activity": "Doctor"}, {"date": "2014-07-30", "details": "", "id": 6, "hour": 19, "activity": "Leisure"}, {"date": "2014-07-30", "details": "", "id": 7, "hour": 20, "activity": "Food"}, {"date": "2014-07-31", "details": "", "id": 79, "hour": 13, "activity": "Food"}, {"date": "2014-07-31", "details": "", "id": 82, "hour": 16, "activity": "Food"}, {"date": "2014-07-31", "details": "", "id": 83, "hour": 17, "activity": "Social"}, {"date": "2014-07-31", "details": "", "id": 84, "hour": 18, "activity": "Social"}, {"date": "2014-07-31", "details": "", "id": 85, "hour": 19, "activity": "Social"}, {"date": "2014-07-31", "details": "", "id": 86, "hour": 20, "activity": "Food"}, {"date": "2014-07-31", "details": "", "id": 87, "hour": 21, "activity": "Leisure"}, {"date": "2014-08-01", "details": "", "id": 8, "hour": 8, "activity": "Food"}, {"date": "2014-08-01", "details": "", "id": 70, "hour": 13, "activity": "Food"}, {"date": "2014-08-01", "details": "", "id": 71, "hour": 14, "activity": "Leisure"}, {"date": "2014-08-01", "details": "", "id": 72, "hour": 15, "activity": "Leisure"}, {"date": "2014-08-01", "details": "", "id": 73, "hour": 16, "activity": "Social"}, {"date": "2014-08-01", "details": "", "id": 74, "hour": 17, "activity": "Social"}, {"date": "2014-08-01", "details": "", "id": 75, "hour": 18, "activity": "Social"}, {"date": "2014-08-01", "details": "", "id": 76, "hour": 19, "activity": "Workout"}, {"date": "2014-08-01", "details": "", "id": 77, "hour": 20, "activity": "Food"}, {"date": "2014-08-01", "details": "", "id": 78, "hour": 21, "activity": "Leisure"}, {"date": "2014-08-02", "details": "", "id": 56, "hour": 8, "activity": "Workout"}, {"date": "2014-08-02", "details": "", "id": 57, "hour": 9, "activity": "Leisure"}, {"date": "2014-08-02", "details": "", "id": 58, "hour": 10, "activity": "Work"}, {"date": "2014-08-02", "details": "", "id": 59, "hour": 11, "activity": "Social"}, {"date": "2014-08-02", "details": "", "id": 60, "hour": 12, "activity": "Social"}, {"date": "2014-08-02", "details": "", "id": 61, "hour": 13, "activity": "Food"}, {"date": "2014-08-02", "details": "", "id": 62, "hour": 14, "activity": "Work"}, {"date": "2014-08-02", "details": "", "id": 63, "hour": 15, "activity": "Social"}, {"date": "2014-08-02", "details": "", "id": 64, "hour": 16, "activity": "Food"}, {"date": "2014-08-02", "details": "", "id": 65, "hour": 17, "activity": "Leisure"}, {"date": "2014-08-02", "details": "", "id": 66, "hour": 18, "activity": "Leisure"}, {"date": "2014-08-02", "details": "", "id": 67, "hour": 19, "activity": "Leisure"}, {"date": "2014-08-02", "details": "", "id": 68, "hour": 20, "activity": "Food"}, {"date": "2014-08-02", "details": "", "id": 69, "hour": 21, "activity": "Food"}, {"date": "2014-08-03", "details": "", "id": 40, "hour": 7, "activity": "Food"}, {"date": "2014-08-03", "details": "", "id": 41, "hour": 8, "activity": "Workout"}, {"date": "2014-08-03", "details": "", "id": 42, "hour": 9, "activity": "Work"}, {"date": "2014-08-03", "details": "", "id": 43, "hour": 10, "activity": "Work"}, {"date": "2014-08-03", "details": "", "id": 44, "hour": 11, "activity": "Work"}, {"date": "2014-08-03", "details": "", "id": 45, "hour": 12, "activity": "Workout"}, {"date": "2014-08-03", "details": "", "id": 46, "hour": 13, "activity": "Leisure"}, {"date": "2014-08-03", "details": "", "id": 47, "hour": 14, "activity": "Food"}, {"date": "2014-08-03", "details": "", "id": 48, "hour": 15, "activity": "Social"}, {"date": "2014-08-03", "details": "", "id": 49, "hour": 16, "activity": "Social"}, {"date": "2014-08-03", "details": "", "id": 50, "hour": 17, "activity": "Work"}, {"date": "2014-08-03", "details": "", "id": 51, "hour": 18, "activity": "Work"}, {"date": "2014-08-03", "details": "", "id": 52, "hour": 19, "activity": "Social"}, {"date": "2014-08-03", "details": "", "id": 53, "hour": 20, "activity": "Social"}, {"date": "2014-08-03", "details": "", "id": 54, "hour": 21, "activity": "Food"}, {"date": "2014-08-03", "details": "", "id": 55, "hour": 22, "activity": "Leisure"}];
-		//$scope.custo = {"id":1};
-		$scope.dateSearchText = "2014-07-30";
-		$scope.dates = ["2014-07-30","2014-07-31","2014-08-01","2014-08-02","2014-08-03"];
-		$scope.hours= [6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22];
-		
-		
-		var activities_grid = [];
-		var i=0;
-		angular.forEach($scope.dates,function(date){
-			
-			var activities_grid_inner = [];
-
-			angular.forEach($scope.hours,function(hour){
-
-				var activities_in_a_cell = [];
-				
-				//
-				// Date is sorted
-				//
-				if(activities[i].date == date &&
-					activities[i].hour == hour){
-					activities_in_a_cell.push(activities[i]);
-					i++;
-					//console.log("match");
-					//console.log(activities[i]);
-				}else{
-					activities_in_a_cell.push({"date": date, "details": "", "hour": hour, "activity": "----"});
-					//console.log("else");
-				}
-				activities_grid_inner.push(activities_in_a_cell);
-				console.log(activities_in_a_cell);
-				
-			});
-			activities_grid.push(activities_grid_inner);
-
-		});
-
-
-
-		var rows = activities_grid.length;
-		var cols = activities_grid[0].length;
-		var activities_grid_transpose = []
-		for(var i=0;i<cols;i++){
-			activities_grid_transpose.push([]);
-		}
-		for(var i=0;i<rows;i++){
-			for(var j=0;j<cols;j++){
-				activities_grid_transpose[j].push(activities_grid[i][j]);
-			}
-		}
-
-
-		$scope.activities_grid = activities_grid_transpose;
-		console.log(activities_grid_transpose);
-
-	});
-	</script>
 </body>
 </html>
