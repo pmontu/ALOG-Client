@@ -16,6 +16,21 @@
        ng-change="change()"
        >
 
+       <table>
+       		<tr>
+       			<td ng-repeat="d in dates">
+       				{{ d | date }}
+       			</td>
+       		</tr>
+       		<tr ng-repeat="h in hours">
+       			<td ng-repeat="d in dates">
+       				<div ng-repeat="a in data | datehour:d:h">
+       					{{ a.activity }}
+       				</div>
+       			</td>
+       		</tr>
+       </table>
+
 		<table>
 			<tr ng-repeat="d in data | datehour:'2014-08-04':'8'">
 				<td>{{ $index+1 }}</td>
