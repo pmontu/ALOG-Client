@@ -35,6 +35,7 @@ app.controller("viewGridController", function($scope, viewGridFactory) {
 		var day = d.getDate();
 
 		viewGridFactory.getActivities(year,month,day).success(function(data){
+			$scope.data = data;
 			refreshActivitiesGrid(data);
 		});
 	}
@@ -69,47 +70,102 @@ app.controller("viewGridController", function($scope, viewGridFactory) {
 		//
 		var activities_grid_before = [];
 		var i=0;
-		angular.forEach($scope.dates,function(date){
+		console.log("activities_data:" + activities_data)
+		if(activities_data.length>0){
 
-			date = date.getDateString();
-			
-			var activities_grid_before_inner = [];
 
-			angular.forEach($scope.hours,function(hour){
 
-				var activities_in_a_cell = [];
+			var k=0;
+			while(k<$scope.dates.length){
+				var date = $scope.dates[k];
+
+				date = date.getDateString();
 				
-				//
-				// Date is sorted
-				//
-				if(activities_data[i].date == date &&
-					activities_data[i].hour == hour){
-					activities_in_a_cell.push(activities_data[i]);
-					i++;
-				}else{
-					activities_in_a_cell.push({"date": date, "details": "", "hour": hour, "activity": "----"});
-				}
-				activities_grid_before_inner.push(activities_in_a_cell);
-				
-			});
-			activities_grid_before.push(activities_grid_before_inner);
+				var activities_grid_before_inner = [];
 
-		});
+				var j=0;
+				while(j<$scope.hours.length){
+					var hour = $scope.hours[j];
 
-		//
-		//	transpose to fit grid
-		//
-		var rows = activities_grid_before.length;
-		var cols = activities_grid_before[0].length;
-		var activities_grid_transpose = []
-		for(var i=0;i<cols;i++){
-			activities_grid_transpose.push([]);
-		}
-		for(var i=0;i<rows;i++){
-			for(var j=0;j<cols;j++){
-				activities_grid_transpose[j].push(activities_grid_before[i][j]);
+					var activities_in_a_cell = [];
+					
+
+					//
+					// Date, hour is sorted
+					//
+					var inserted = false;
+					while(true){
+						var current_date=activities_data[i].date;
+						var current_hour=activities_data[i].hour;
+
+						console.log(activities_data[i]);
+
+						if(current_date == date && current_hour == hour){
+							console.log("current equals");
+							// INSERT ACTIVITY RECORD FOR CELL
+							activities_in_a_cell.push(activities_data[i]);
+
+							inserted = true;
+							i++;
+							if(i<activities_data.length){
+								//ACCESS NEXT ENTRY TO CHECK IF ITS MULTIPLE ACTIVITY
+								var next_date = activities_data[i].date;
+								var next_hour = activities_data[i].hour;
+								if(next_date == date && next_hour == hour){
+									console.log("next equals");
+									continue;
+								}
+								else break; // OTHER ENTRY
+							}
+							else break; // NO MORE ENTRIES
+						}
+						else break;// LEAVE ENTRY ALONE MOVE DATES AND HOURS
+					}
+					if(!inserted){
+						//	DUMMY ENTRY
+						activities_in_a_cell.push({"date": date, "details": "", "hour": hour, "activity": "----"});
+					}
+
+					/*
+					if(activities_data[i].date == date &&
+						activities_data[i].hour == hour){
+						activities_in_a_cell.push(activities_data[i]);
+						i++;
+					}else{
+						activities_in_a_cell.push({"date": date, "details": "", "hour": hour, "activity": "----"});
+					}*/
+
+
+
+					activities_grid_before_inner.push(activities_in_a_cell);
+					j++;
+					
+				}// LOOP
+
+				activities_grid_before.push(activities_grid_before_inner);
+				k++;
+			}// LOOP
+
+			console.log(i);
+			console.log(activities_data.length);
+			console.log("diff:"+(activities_data.length-i));
+
+			//
+			//	transpose to fit grid
+			//
+			var rows = activities_grid_before.length;
+			var cols = activities_grid_before[0].length;
+			var activities_grid_transpose = []
+			for(var i=0;i<cols;i++){
+				activities_grid_transpose.push([]);
 			}
-		}
+			for(var i=0;i<rows;i++){
+				for(var j=0;j<cols;j++){
+					activities_grid_transpose[j].push(activities_grid_before[i][j]);
+				}
+			}
+
+		}//	IF DATA FROM JSON LENGTH > 1
 
 
 		$scope.activities_grid = activities_grid_transpose;
