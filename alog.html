@@ -17,28 +17,7 @@
        >
 
 		<table>
-			<tr >
-				<th>
-					
-				</th>
-				<th ng-repeat="d in dates">
-					{{ d | date:'yyyy-MM-dd' }}
-				</th>
-			</tr>
-			<tr ng-repeat="activities_grid_inner in activities_grid">
-				<th>
-					{{ hours[$index] }}
-				</th>
-				<td ng-repeat="activities_in_a_cell in activities_grid_inner">
-					<div ng-repeat="activity in activities_in_a_cell">
-						{{ activity.activity }}
-					</div>
-				</td>
-			</tr>
-		</table>
-
-		<table>
-			<tr ng-repeat="d in data">
+			<tr ng-repeat="d in data | datehour:'2014-08-04':'8'">
 				<td>{{ $index+1 }}</td>
 				<td>{{ d.date }}</td>
 				<td>{{ d.hour }}</td>
