@@ -1,46 +1,37 @@
 <html>
 <body ng-app="alogApp">
 
-
 	
 	<script src="js/angular.js"></script>
 	<script src="js/alog.js"></script>
 
 	<div ng-controller="viewGridController">
 
+       	<input type="date"
+                     ng-model="dateStart"
+                     min="{{ datemin | date:'yyyy-MM-dd' }}"
+                     max="{{ datemax | date:'yyyy-MM-dd' }}"
+                     ng-change="change()"
+              >
 
-		<input type="date"
-       ng-model="dateStart"
-       min="2014-07-30"
-       max="{{ dateToday | date:'yyyy-MM-dd' }}"
-       ng-change="change()"
-       >
-
-       <table>
-       		<tr>
-       			<td ng-repeat="d in dates">
-       				{{ d | date }}
-       			</td>
-       		</tr>
-       		<tr ng-repeat="h in hours">
-       			<td ng-repeat="d in dates">
-       				<div ng-repeat="a in data | datehour:d:h">
-       					{{ a.activity }}
-       				</div>
-       			</td>
-       		</tr>
-       </table>
-
-		<table>
-			<tr ng-repeat="d in data | datehour:'2014-08-04':'8'">
-				<td>{{ $index+1 }}</td>
-				<td>{{ d.date }}</td>
-				<td>{{ d.hour }}</td>
-				<td>{{ d.id }}</td>
-				<td>{{ d.activity }}</td>
-			</tr>
-		</table>
-
+              <table ng-if="dateStart">
+              		<tr>
+                                   <td>h/d</td>
+              			<th ng-repeat="d in dates">
+              				{{ d | date }}
+              			</th>
+              		</tr>
+              		<tr ng-repeat="h in hours">
+                                   <th>
+                                          {{ h }}
+                                   </th>
+              			<td ng-repeat="d in dates">
+              				<div ng-repeat="a in data | datehour:d:h">
+              					{{ a.activity }}
+              				</div>
+              			</td>
+              		</tr>
+              </table>
 
 	</div>
 
