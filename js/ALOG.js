@@ -16,21 +16,6 @@ app.filter('datehour', function($filter){
 	};
 });
 
-//	INPUT: START DATE
-//	OUTPUT: 5 DAYS FROM START DATE
-app.filter('dates',function(){
-	return function(startdate){
-		dates = [];
-		var i=0;
-		while(i<5){
-			var d = new Date(startdate);
-			d.setDate(d.getDate()+i);
-			dates.push(d);
-			i++;
-		}
-		return dates;
-	};
-});
 
 app.controller("viewGridController", function($scope, viewGridFactory, $filter) {
 
@@ -59,8 +44,40 @@ app.controller("viewGridController", function($scope, viewGridFactory, $filter) 
 			$scope.data = data;
 		});
 
-		$scope.dates = $filter('dates')($scope.dateStart);
+		$scope.dates = getDates($scope.dateStart);
 
+		$scope.isPreviousAllowed = getIsPreviousAllowed($scope.datemin,$scope.dateStart);
+		$scope.isNextAllowed = getIsNextAllowed($scope.datemax,$scope.dateStart);
+
+	}
+
+	function getIsPreviousAllowed(mindate,startdate){
+		var dmin = new Date(mindate);
+		var sd = new Date(startdate);
+		if(dmin<sd)
+			return true;
+		return false;
+	}
+
+	function getIsNextAllowed(maxdate,startdate){
+		var dmax = new Date(maxdate);
+		var newdate = new Date(startdate);
+		newdate.setDate(newdate.getDate()+5-1);
+		if(dmax>newdate)
+			return true;
+		return false;
+	}
+
+	function getDates(startdate){
+		dates = [];
+		var i=0;
+		while(i<5){
+			var d = new Date(startdate);
+			d.setDate(d.getDate()+i);
+			dates.push(d);
+			i++;
+		}
+		return dates;
 	}
 
 	//	SELECT DATE TO LOAD ACTIVITIES
@@ -79,8 +96,9 @@ app.factory('viewGridFactory', function($http){
 	// GET 5 DAYS OF ACTIVITIES
 	factory.getActivities = function(year,month,day) {
 		return $http.get(
-				'http://127.0.0.1:12345/activity/activities/'
-				+year+'/'+month+'/'+day+'/5/rows.json'
+				'http://127.0.0.1:12345/activity/activities/'+
+				year+'/'+month+'/'+day+
+				'/5/rows.json'
 			);
 	};
 
