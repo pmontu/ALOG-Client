@@ -31,8 +31,8 @@
                      <div class="panel-body">
 
                             <ul class="pager">
-                                   <li class="previous"><a href="#" >&larr; Older</a></li>
-                                   <li class="next"><a href="#" >Newer &rarr;</a></li>
+                                   <div ng-if="isPreviousAllowed"><li class="previous"><a href="#" >&larr; Older</a></li></div>
+                                   <div ng-if="isNextAllowed"><li class="next"><a href="#" >Newer &rarr;</a></li></div>
                             </ul>
 
                             <table class="table table-striped table-condensed">
@@ -47,9 +47,10 @@
                                                         {{ h }}
                                                  </th>
                             			<td ng-repeat="d in dates">
-                            				<div ng-repeat="a in data | datehour:d:h">
-                            					{{ a.activity }}
-                            				</div>
+                            				<div ng-repeat="a in activities[$parent.$index][$index].cells">{{ a.activity }}</div>
+                                                        <button ng-if="activities[$parent.$index][$index].isEmpty" type="button" class="btn btn-default btn-sm">
+                                                               <span class="glyphicon glyphicon-plus-sign"></span>
+                                                        </button>
                             			</td>
                             		</tr>
                             </table>
