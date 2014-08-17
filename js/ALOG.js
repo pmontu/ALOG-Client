@@ -1,6 +1,14 @@
 
 
-var app = angular.module("alogApp",[]);
+var app = angular.module("alogApp",['ngRoute']);
+
+app.config(function($routeProvider){
+	$routeProvider.when('/',{
+		controller:"viewGridController",
+		templateUrl:"views/viewactivities.html"
+	});
+});
+
 
 //	FILTERS ACTIVITY
 //	INEFFECTIVE METHOD
@@ -20,6 +28,7 @@ app.filter('datehour', function($filter){
 app.controller("viewGridController", function($scope, viewGridFactory, $filter) {
 
 	$scope.hours= [6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22];
+	$scope.daysnumber = 7;
 
 	//	MIN MAX DATES FOR DATE PICKER
 	function setDateRange(){
@@ -31,7 +40,7 @@ app.controller("viewGridController", function($scope, viewGridFactory, $filter) 
 
 	setDateRange();
 
-	//	LOADS ACTIVITIES OF 5 DAYS FROM START DATE ON SCREEN
+	//	LOADS ACTIVITIES OF NUMBER OF DAYS FROM START DATE ON SCREEN
 	//	MUST FILL DATES TOO SO THAT BOTH ARE USED BY PRESENTATION
 	function init(){
 		
@@ -40,14 +49,14 @@ app.controller("viewGridController", function($scope, viewGridFactory, $filter) 
 		var month = d.getMonth() + 1;
 		var day = d.getDate();
 
-		viewGridFactory.getActivities(year,month,day).success(function(data){
+		viewGridFactory.getActivities(year,month,day,$scope.daysnumber).success(function(data){
 			$scope.data = data;
 		});
 
-		$scope.dates = getDates($scope.dateStart);
+		$scope.dates = getDates($scope.dateStart,$scope.daysnumber);
 
 		$scope.isPreviousAllowed = getIsPreviousAllowed($scope.datemin,$scope.dateStart);
-		$scope.isNextAllowed = getIsNextAllowed($scope.datemax,$scope.dateStart);
+		$scope.isNextAllowed = getIsNextAllowed($scope.datemax,$scope.dateStart,$scope.daysnumber);
 
 	}
 
@@ -59,19 +68,19 @@ app.controller("viewGridController", function($scope, viewGridFactory, $filter) 
 		return false;
 	}
 
-	function getIsNextAllowed(maxdate,startdate){
+	function getIsNextAllowed(maxdate,startdate,daysnumber){
 		var dmax = new Date(maxdate);
 		var newdate = new Date(startdate);
-		newdate.setDate(newdate.getDate()+5-1);
+		newdate.setDate(newdate.getDate()+daysnumber-1);
 		if(dmax>newdate)
 			return true;
 		return false;
 	}
 
-	function getDates(startdate){
+	function getDates(startdate,daysnumber){
 		dates = [];
 		var i=0;
-		while(i<5){
+		while(i<daysnumber){
 			var d = new Date(startdate);
 			d.setDate(d.getDate()+i);
 			dates.push(d);
@@ -93,12 +102,11 @@ app.controller("viewGridController", function($scope, viewGridFactory, $filter) 
 app.factory('viewGridFactory', function($http){
 	var factory = {};
 	
-	// GET 5 DAYS OF ACTIVITIES
-	factory.getActivities = function(year,month,day) {
+	// GET NUMBER OF DAYS OF ACTIVITIES
+	factory.getActivities = function(year,month,day,daysnumber) {
 		return $http.get(
 				'http://127.0.0.1:12345/activity/activities/'+
-				year+'/'+month+'/'+day+
-				'/5/rows.json'
+				year+'/'+month+'/'+day+'/'+daysnumber+'/rows.json'
 			);
 	};
 
